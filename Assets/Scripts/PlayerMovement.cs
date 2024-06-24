@@ -255,6 +255,7 @@ public class PlayerMovement : MonoBehaviour
             checkPointPos = checkPoint.transform.position;
             if (riding)
             {
+                
                 transform.parent.position = new Vector2 (checkPointPos.x, 0);
                 transform.position = new Vector2 (-1+transform.parent.position.x, 5+transform.parent.position.y);;
 

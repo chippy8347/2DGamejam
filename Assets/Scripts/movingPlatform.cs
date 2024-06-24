@@ -31,21 +31,28 @@ public class movingPlatform : MonoBehaviour
             Vector2 direction = (_targetWayPoint.position - transform.position).normalized;
             Vector2 vel = direction * platformSpeed;
             platBody.velocity = vel;
-            if (Vector2.Distance(a:transform.position, b:_targetWayPoint.position) < _checkDistance)
+            if (Vector2.Distance(transform.position, _targetWayPoint.position) < _checkDistance)
             {
-                _targetWayPoint = GetNextWaypoint();
+                transform.position = _targetWayPoint.position;
+                if (_waypoints.Length == 1)
+                    stopped = true;
+                else
+                    _targetWayPoint = GetNextWaypoint();
             }
         }
         else
-        platBody.velocity = Vector2.zero;
+        {
+            if(transform.position.x < _targetWayPoint.position.x - 10)
+            {
+                stopped = false;
+            }
+            platBody.velocity = Vector2.zero;
+        }
+
     }
 
     public Transform GetNextWaypoint()
     {
-        if(transform.Find("Player") != null)
-        {
-            stopped = true;
-        }
         StartCoroutine(BlinkNow());
         _currentWaypointIndex++;
         if (_currentWaypointIndex >= _waypoints.Length)
